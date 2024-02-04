@@ -1,14 +1,15 @@
 const mineflayer = require('mineflayer');
 const navigatePlugin = require('mineflayer-navigate')(mineflayer);
+const config = require('./config.json')
 require('./server.js');
 
 function createBot(username) {
   const bot = mineflayer.createBot({
-    host: '8b8t.me',
-    username: '0_Chiharu',
-    auth: 'offline',
-    port: 25565,
-    version: '1.17.1'
+    host: config.host,
+    username: config.username,
+    auth: config.auth,
+    port: config.port,
+    version: config.version
   });
 
   navigatePlugin(bot);
@@ -18,7 +19,7 @@ function createBot(username) {
 
   bot.on('messagestr', (message) => {
     if (message.includes('Use the command /login <password>')) {
-      bot.chat(`/login ${process.env.pass}`);
+      bot.chat(`/login ${config.auth_password}`);
     }
   });
 
@@ -28,10 +29,8 @@ function createBot(username) {
         findNearestDonkey();
       }, 1000);
     } else if (message === '*tpa') {
-      setTimeout(() => {
-        bot.chat('/tpa 0_Ngocc');
-      }, 500);
-    } else if (message === '*dm') {
+        bot.chat(`/tpa ${config.admin}`);
+    } else if (message === '*dismount') {
       bot.dismount();
     } else if (message === '*kill') {
       bot.chat('/kill');
@@ -57,7 +56,7 @@ function createBot(username) {
         }, 5 * 1000);
       });
     } else {
-      bot.chat('Không tìm thấy Donkey.');
+      bot.chat(`I can't find donkey`);
     }
   }
 
@@ -78,4 +77,4 @@ function createBot(username) {
   });
 }
 
-createBot('0_Chiharu');
+createBot(config.username);

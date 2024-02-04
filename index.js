@@ -1,7 +1,7 @@
 const mineflayer = require('mineflayer');
 const navigatePlugin = require('mineflayer-navigate')(mineflayer);
 const config = require('./config.json')
-require('./server.js');
+require('./keep_alive.js');
 
 function createBot(username) {
   const bot = mineflayer.createBot({

@@ -32,12 +32,9 @@ function createBot(username) {
         bot.chat('/tpa 0_Ngocc');
       }, 500);
     } else if (message === '*dm') {
-      if (isRidingDonkey) {
-        bot.dismount();
-        isRidingDonkey = false;
-      } else {
-        bot.chat('/home 1');
-      }
+      bot.dismount();
+    } else if (message === '*kill') {
+      bot.chat('/kill');
     }
   });
 
@@ -66,10 +63,17 @@ function createBot(username) {
 
   bot.on('spawn', () => {
     if (isRidingDonkey) {
-      bot.dismount();
-      isRidingDonkey = false;
+      isRidingDonkey = true;
+      donkeyEntity = donkey;
     } else {
-      bot.chat('/home 1');
+      let mountTimeout;
+
+      bot.on('mount', () => {
+        clearTimeout(mountTimeout);
+        mountTimeout = setTimeout(() => {
+          bot.dismount();
+        }, 1 * 1000);
+      });
     }
   });
 }

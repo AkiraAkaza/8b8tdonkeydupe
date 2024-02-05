@@ -21,7 +21,7 @@ Server 8b8t donkey helper bot dupe
 ```
 
 # How to setup in 8b8t server
-1. Find a donkey and chat "tpa"
+1. Find a donkey and chat *tpa
 2. Accept the bot with the command /tpayes
 3. Chat *dupe then open the donkey's inventory
 4. Wait for the bot to mount the donkey and then disconnect from the server

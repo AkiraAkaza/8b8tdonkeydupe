@@ -19,10 +19,13 @@ Server 8b8t donkey helper bot dupe
     "auth_password": "ExamplePassword", // Bot Password when logging in [/login - /register]
 }
 ```
-# Setup in 8b8t server
-1. Find donkey and chat *tpa
-2. Accept bot with command /tpayes
-3. Chat *dupe then open donkey inventory
-4. Wait bot mount donkey and disconnect server
-5. Collect kit then close inventory
-6. Repeat for kit
+
+# How to setup in 8b8t server
+1. Find a donkey and chat "tpa"
+2. Accept the bot with the command /tpayes
+3. Chat *dupe then open the donkey's inventory
+4. Wait for the bot to mount the donkey and then disconnect from the server
+5. Collect the kit and then close the inventory
+6. Repeat for other kits
+   
+> Enjoy

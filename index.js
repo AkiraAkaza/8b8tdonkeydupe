@@ -18,6 +18,9 @@ function createBot(username) {
   let donkeyEntity = null;
 
   bot.on('messagestr', (message) => {
+    if (message.includes('Use the command /register <password> <password>.')) {
+      bot.chat(`/register ${config.auth_password} ${config.auth_password}`);
+    }
     if (message.includes('Use the command /login <password>')) {
       bot.chat(`/login ${config.auth_password}`);
     }

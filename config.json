@@ -1,5 +1,5 @@
 {
-    "admin": "Your_ingame_here",
+    "admin": ["admin1", "admin2", "admin3"],
     "host": "anarchy.8b8t.me",
     "username": "ExampleUsername",
     "version": "1.17.1",

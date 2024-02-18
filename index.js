@@ -1,6 +1,7 @@
 const mineflayer = require('mineflayer');
 const navigatePlugin = require('mineflayer-navigate')(mineflayer);
 const config = require('./config.json')
+const mcData = require('minecraft-data')(config.version);
 require('./keep_alive.js');
 
 function createBot(username) {
@@ -16,29 +17,44 @@ function createBot(username) {
 
   let isRidingDonkey = false;
   let donkeyEntity = null;
-
+  
   bot.on('messagestr', (message) => {
+    var pass = process.env.auth_password
     if (message.includes('Use the command /register <password> <password>.')) {
-      bot.chat(`/register ${config.auth_password} ${config.auth_password}`);
+      bot.chat(`/register ${pass} ${pass}`);
     }
-    if (message.includes('Use the command /login <password>')) {
-      bot.chat(`/login ${config.auth_password}`);
+    if (message.includes('Use the command /login <password>.')) {
+      bot.chat(`/login ${pass}`);
     }
   });
 
   bot.on('chat', (username, message) => {
-    if (message === '*dupe') {
+    const admins = config.admin;
+    if (message === '*dupe' && admins.includes(username)) { 
       setTimeout(() => {
         findNearestDonkey();
       }, 1000);
-    } else if (message === '*tpa') {
-        bot.chat(`/tpa ${config.admin}`);
+    }
+     else if (message === '*tpa') {
+        bot.chat(`/tpa ${admins}`);
     } else if (message === '*dismount') {
       bot.dismount();
     } else if (message === '*kill') {
       bot.chat('/kill');
     }
   });
+  
+/*  
+// Whispers chat ex: /w bot_username *dupe
+bot.on("messagestr", (message) => {
+    var admins = config.admin;
+    if (admins.some(admin => message.includes(`${admin} Whispers: *dupe`))) {
+      setTimeout(() => {
+        findNearestDonkey();
+      }, 500);
+    }
+  });
+  */
 
   function findNearestDonkey() {
     const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');
@@ -47,16 +63,16 @@ function createBot(username) {
       bot.navigate.to(donkey.position);
       bot.navigate.on('arrived', () => {
         bot.mount(donkey);
-
+        
         isRidingDonkey = true;
         donkeyEntity = donkey;
 
         setTimeout(() => {
           bot.quit();
-        }, 500);
+        }, 100);
         setTimeout(() => {
           createBot(username);
-        }, 5 * 1000);
+        }, 100);
       });
     } else {
       bot.chat(`I can't find donkey`);
@@ -74,7 +90,7 @@ function createBot(username) {
         clearTimeout(mountTimeout);
         mountTimeout = setTimeout(() => {
           bot.dismount();
-        }, 1 * 1000);
+        }, 100);
       });
     }
   });

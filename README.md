@@ -3,7 +3,7 @@ Server 8b8t donkey helper bot dupe
  
 # How to use
 1. Get [Node.js](https://nodejs.org)
-2. Downlod and unzip the repo / `` git clone https://github.com/AkiraAkaza/8b8tdonkeydupe.git ``
+2. Downlod and unzip the repo `` git clone https://github.com/AkiraAkaza/8b8tdonkeydupe.git ``
 3. Install [Mineflayer](https://github.com/PrismarineJS/mineflayer) with `` npm i mineflayer ``
 4. Install [Mineflayer-navigate](https://github.com/PrismarineJS/mineflayer-navigate) with `` npm i mineflayer-navigate ``
 5. Edit the config fles
@@ -12,7 +12,7 @@ Server 8b8t donkey helper bot dupe
 # Config Format [config.json]
 ```
 {
-    "admin": "Your_ingame_name" // your username duping with bot
+    "admin": ["admin1", "admin2", "admin3"], // team or clan duping with bot
     "host": "anarchy.8b8t.me", // Server IP
     "username": "ExampleUsername", // Bot Username
     "version": "1.12.2", // Bot Version
@@ -28,4 +28,4 @@ Server 8b8t donkey helper bot dupe
 5. Collect the kit and then close the inventory
 6. Repeat for other kits
    
-> Enjoy
+> Enjoy (https://discord.com/channels/@me/1193936024330571926/1204325365938528316)

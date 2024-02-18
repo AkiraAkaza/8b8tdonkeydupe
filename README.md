@@ -27,5 +27,10 @@ Server 8b8t donkey helper bot dupe
 4. Wait for the bot to mount the donkey and then disconnect from the server
 5. Collect the kit and then close the inventory
 6. Repeat for other kits
+
+#How to setup bot online 24/7
+1. Run command npm install pm2
+2. pm2 start index.js
    
-> Enjoy (https://discord.com/channels/@me/1193936024330571926/1204325365938528316)
+> Enjoy 
+

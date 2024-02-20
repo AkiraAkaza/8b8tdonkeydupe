@@ -19,7 +19,7 @@ function createBot(username) {
   let donkeyEntity = null;
   
   bot.on('messagestr', (message) => {
-    var pass = process.env.auth_password
+    var pass = config.auth_password
     if (message.includes('Use the command /register <password> <password>.')) {
       bot.chat(`/register ${pass} ${pass}`);
     }

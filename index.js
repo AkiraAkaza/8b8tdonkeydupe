@@ -17,6 +17,13 @@ function createBot(username) {
 
   let isRidingDonkey = false;
   let donkeyEntity = null;
+
+  bot.on('kicked', console.log)
+  bot.on('error', console.log)
+
+  bot.on("message", (message) => {
+      console.log(message.toAnsi());
+    });
   
   bot.on('messagestr', (message) => {
     var pass = config.auth_password
@@ -29,23 +36,17 @@ function createBot(username) {
   });
 
   bot.on('chat', (username, message) => {
-    const admins = config.admin;
-    if (message === '*dupe' && admins.includes(username)) { 
-      setTimeout(() => {
-        findNearestDonkey();
-      }, 1000);
-    }
-     else if (message === '*tpa') {
-        bot.chat(`/tpa ${admins}`);
-    } else if (message === '*dismount') {
+    const admins = Array.isArray(config.admin) ? config.admin : [config.admin];
+
+    if (message === '*tpa' && admins.includes(username)) {
+      bot.chat(`/tpa 0_Ngocc`); 
+    } else if (message === '*dismount' && admins.includes(username)) {
       bot.dismount();
-    } else if (message === '*kill') {
+    } else if (message === '*kill' && admins.includes(username)) {
       bot.chat('/kill');
     }
   });
-  
-/*  
-// Whispers chat ex: /w bot_username *dupe
+ 
 bot.on("messagestr", (message) => {
     var admins = config.admin;
     if (admins.some(admin => message.includes(`${admin} Whispers: *dupe`))) {
@@ -54,7 +55,6 @@ bot.on("messagestr", (message) => {
       }, 500);
     }
   });
-  */
 
   function findNearestDonkey() {
     const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');

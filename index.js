@@ -1,7 +1,7 @@
 const mineflayer = require('mineflayer');
 const navigatePlugin = require('mineflayer-navigate')(mineflayer);
-const config = require('./config.json')
-const mcData = require('minecraft-data')(config.version);
+const fs = require('fs');
+const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 require('./keep_alive.js');
 
 function createBot(username) {
@@ -26,36 +26,39 @@ function createBot(username) {
     });
   
   bot.on('messagestr', (message) => {
-    var pass = config.auth_password
-    if (message.includes('Use the command /register <password> <password>.')) {
-      bot.chat(`/register ${pass} ${pass}`);
-    }
-    if (message.includes('Use the command /login <password>.')) {
-      bot.chat(`/login ${pass}`);
-    }
-  });
+      var pass = config.auth_password;
+      const admins = config.admin;
+      const spaceIndex = message.indexOf(" ");
+      if (spaceIndex === -1) return;
 
-  bot.on('chat', (username, message) => {
-    const admins = Array.isArray(config.admin) ? config.admin : [config.admin];
-
-    if (message === '*tpa' && admins.includes(username)) {
-      bot.chat(`/tpa 0_Ngocc`); 
-    } else if (message === '*dismount' && admins.includes(username)) {
-      bot.dismount();
-    } else if (message === '*kill' && admins.includes(username)) {
-      bot.chat('/kill');
+      if (message.includes('Use the command /register <password> <password>.')) {
+        bot.chat(`/register ${pass} ${pass}`);
+      }
+      if (message.includes('Use the command /login <password>.')) {
+        bot.chat(`/login ${pass}`);
+      }
+      if (admins.some(admin => message.includes(`${admin} Whispers: *dupe`))) {
+          setTimeout(() => {
+            findNearestDonkey();
+          }, 500);
+      }
+    if (admins.some(admin => message.includes(`${admin} Whispers: *tpa`))) {
+        requestingAdmin = message.split(" ")[0]; 
+        bot.chat(`/tpa ${requestingAdmin}`); 
+    } else if (message.includes('[8b8t] You must be 20000 blocks from spawn to use /tpa')) {
+        if (requestingAdmin) {
+            bot.chat(`/w ${requestingAdmin} Your bot must be 20000 blocks from spawn to use /tpa`);
+            requestingAdmin = null;
+        }
     }
+      if (admins.some(admin => message.includes(`${admin} Whispers: *dismount`))) {
+        bot.dismount();
+      }
+      if (admins.some(admin => message.includes(`${admin} Whispers: *kill`))) {
+        bot.chat('/kill');
+      }
   });
- 
-bot.on("messagestr", (message) => {
-    var admins = config.admin;
-    if (admins.some(admin => message.includes(`${admin} Whispers: *dupe`))) {
-      setTimeout(() => {
-        findNearestDonkey();
-      }, 500);
-    }
-  });
-
+  
   function findNearestDonkey() {
     const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');
 

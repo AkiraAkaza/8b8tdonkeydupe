@@ -24,7 +24,7 @@ Server 8b8t donkey helper bot dupe
 Chat /w bot-username + command
 1. *dupe
 2. *tpa
-3. Kill
+3. *kill
 4. *dismount
 
 # How to setup in 8b8t server

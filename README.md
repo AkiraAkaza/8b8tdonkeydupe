@@ -35,7 +35,7 @@ Chat /w bot-username + command
 5. Collect the kit and then close the inventory
 6. Repeat for other kits
 
-#How to setup bot online 24/7
+# How to setup bot online 24/7
 1. Run command npm install pm2
 2. pm2 start index.js
    

@@ -20,6 +20,13 @@ Server 8b8t donkey helper bot dupe
 }
 ```
 
+# Full commands
+Chat /w bot-username + command
+1. *dupe
+2. *tpa
+3. Kill
+4. *dismount
+
 # How to setup in 8b8t server
 1. Find a donkey and chat *tpa
 2. Accept the bot with the command /tpayes

@@ -2,7 +2,6 @@ const mineflayer = require('mineflayer');
 const navigatePlugin = require('mineflayer-navigate')(mineflayer);
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
-require('./keep_alive.js');
 
 function createBot(username) {
   const bot = mineflayer.createBot({
@@ -26,7 +25,7 @@ function createBot(username) {
     });
   
   bot.on('messagestr', (message) => {
-      var pass = config.auth_password;
+      var pass = process.env.auth_password;
       const admins = config.admin;
       const spaceIndex = message.indexOf(" ");
       if (spaceIndex === -1) return;
@@ -60,26 +59,25 @@ function createBot(username) {
   });
   
   function findNearestDonkey() {
-    const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');
+      const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');
 
-    if (donkey) {
-      bot.navigate.to(donkey.position);
-      bot.navigate.on('arrived', () => {
-        bot.mount(donkey);
-        
-        isRidingDonkey = true;
-        donkeyEntity = donkey;
+      if (donkey) {
+          bot.navigate.to(donkey.position);
+          bot.navigate.on('arrived', () => {
+              bot.mount(donkey);
+              isRidingDonkey = true;
+              donkeyEntity = donkey;
 
-        setTimeout(() => {
-          bot.quit();
-        }, 100);
-        setTimeout(() => {
-          createBot(username);
-        }, 100);
-      });
-    } else {
-      bot.chat(`I can't find donkey`);
-    }
+            bot.once('mount', () => {
+              bot.quit();
+                setTimeout(() => {
+                  createBot(username);
+                }, 1);
+              });
+          });
+      } else {
+          bot.chat(`I can't find a donkey`);
+      }
   }
 
   bot.on('spawn', () => {
@@ -93,7 +91,7 @@ function createBot(username) {
         clearTimeout(mountTimeout);
         mountTimeout = setTimeout(() => {
           bot.dismount();
-        }, 100);
+        }, 1);
       });
     }
   });

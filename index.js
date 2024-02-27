@@ -25,7 +25,7 @@ function createBot(username) {
     });
   
   bot.on('messagestr', (message) => {
-      var pass = process.env.auth_password;
+      var pass = config.auth_password;
       const admins = config.admin;
       const spaceIndex = message.indexOf(" ");
       if (spaceIndex === -1) return;

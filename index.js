@@ -1,5 +1,7 @@
-const mineflayer = require('mineflayer');
-const navigatePlugin = require('mineflayer-navigate')(mineflayer);
+const mineflayer = require("mineflayer");
+const navigatePlugin = require("mineflayer-navigate")(mineflayer);
+const mcData = require("minecraft-data")(config.version);
+require("./keep_alive.js");
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 
@@ -39,7 +41,7 @@ function createBot(username) {
       if (admins.some(admin => message.includes(`${admin} Whispers: *dupe`))) {
           setTimeout(() => {
             findNearestDonkey();
-          }, 500);
+          }, 10);
       }
     if (admins.some(admin => message.includes(`${admin} Whispers: *tpa`))) {
         requestingAdmin = message.split(" ")[0]; 
@@ -59,35 +61,36 @@ function createBot(username) {
   });
   
   function findNearestDonkey() {
-      const donkey = bot.nearestEntity((entity) => entity.mobType === 'Donkey');
+    const donkey = bot.nearestEntity((entity) => entity.mobType === "Donkey");
 
-      if (donkey) {
-          bot.navigate.to(donkey.position);
-          bot.navigate.on('arrived', () => {
-              bot.mount(donkey);
-              isRidingDonkey = true;
-              donkeyEntity = donkey;
+    if (donkey) {
+      bot.navigate.to(donkey.position);
+      bot.navigate.on("arrived", () => {
+        bot.mount(donkey);
 
-            bot.once('mount', () => {
-              bot.quit();
-                setTimeout(() => {
-                  createBot(username);
-                }, 1);
-              });
-          });
-      } else {
-          bot.chat(`I can't find a donkey`);
-      }
+        isRidingDonkey = true;
+        donkeyEntity = donkey;
+
+        setTimeout(() => {
+          bot.quit();
+        }, 1);
+        setTimeout(() => {
+          createBot(username);
+        }, 1);
+      });
+    } else {
+      bot.chat(`> I can't find donkey`);
+    }
   }
 
-  bot.on('spawn', () => {
+  bot.on("spawn", () => {
     if (isRidingDonkey) {
       isRidingDonkey = true;
       donkeyEntity = donkey;
     } else {
       let mountTimeout;
 
-      bot.on('mount', () => {
+      bot.on("mount", () => {
         clearTimeout(mountTimeout);
         mountTimeout = setTimeout(() => {
           bot.dismount();

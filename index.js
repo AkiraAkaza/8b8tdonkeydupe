@@ -1,6 +1,5 @@
 const mineflayer = require("mineflayer");
 const navigatePlugin = require("mineflayer-navigate")(mineflayer);
-const mcData = require("minecraft-data")(config.version);
 require("./keep_alive.js");
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));

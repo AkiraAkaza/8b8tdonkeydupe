@@ -4,8 +4,7 @@ Server 8b8t donkey helper bot dupe
 # How to use
 1. Get [Node.js](https://nodejs.org)
 2. Downlod and unzip the repo `` git clone https://github.com/AkiraAkaza/8b8tdonkeydupe.git ``
-3. Install [Mineflayer](https://github.com/PrismarineJS/mineflayer) with `` npm i mineflayer ``
-4. Install [Mineflayer-navigate](https://github.com/PrismarineJS/mineflayer-navigate) with `` npm i mineflayer-navigate ``
+3. Run the command ``npm i`` to download the necessary things for the bot.
 5. Edit the config fles
 6. Run the script with ``node index.js``
 

@@ -37,6 +37,8 @@ Chat /w bot-username + command
 # How to setup bot online 24/7
 1. Run command npm install pm2
 2. pm2 start index.js
+
+# [Youtube](https://www.youtube.com/watch?v=a8utehwDmtU&t=19s)
    
 > Enjoy 
 
